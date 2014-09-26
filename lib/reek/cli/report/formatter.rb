@@ -1,6 +1,7 @@
 module Reek
   module Cli
     module Report
+      # Simple formatter for the entire Reek report
       module Formatter
         def self.format_list(warnings, formatter = SimpleWarningFormatter)
           warnings.map do |warning|
@@ -17,6 +18,7 @@ module Reek
         end
       end
 
+      # Formats a warning with line numbers and a wiki link
       module UltraVerboseWarningFormattter
         BASE_URL_FOR_HELP_LINK = 'https://github.com/troessner/reek/wiki/'
 
@@ -24,7 +26,7 @@ module Reek
 
         def format(warning)
           "#{WarningFormatterWithLineNumbers.format(warning)} " \
-          "[#{explanatory_link(warning)}]"
+            "[#{explanatory_link(warning)}]"
         end
 
         def explanatory_link(warning)
@@ -36,18 +38,21 @@ module Reek
         end
       end
 
+      # Formats a warning without line numbers
       module SimpleWarningFormatter
         def self.format(warning)
           "#{warning.context} #{warning.message} (#{warning.smell_type})"
         end
       end
 
+      # Formats a warning with line numbers
       module WarningFormatterWithLineNumbers
         def self.format(warning)
           "#{warning.lines.inspect}:#{SimpleWarningFormatter.format(warning)}"
         end
       end
 
+      # Formats a warning suitable for editor integration.
       module SingleLineWarningFormatter
         def self.format(warning)
           "#{warning.source}:#{warning.lines.first}: " \
