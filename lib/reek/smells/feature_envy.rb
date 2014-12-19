@@ -37,6 +37,10 @@ module Reek
         'LowCohesion'
       end
 
+      def self.default_config
+        super.merge(EXCLUDE_KEY => ['initialize'])
+      end
+
       #
       # Checks whether the given +context+ includes any code fragment that
       # might "belong" on another class.
